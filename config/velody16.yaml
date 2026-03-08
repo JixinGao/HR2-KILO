@@ -1,0 +1,58 @@
+common:
+  lid_topic: "/velodyne_points" 
+  imu_topic: "/bhr_b3/imu" 
+  encoder_topic: "/bhr_b3/foot_state" 
+  imu_freq: 1000
+  joint_freq: 1000
+
+preprocess:
+  lidar_type: 2
+  scan_line: 16
+  timestamp_unit: 0 # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
+  blind: 2.0 
+
+mapping:
+  lidar_time_inte: 0.1
+  satu_acc: 30.0 # the saturation value of IMU's acceleration. not related to the units
+  satu_gyro: 35 # the saturation value of IMU's angular velocity. not related to the units
+  acc_norm: 9.81 # 1.0 for g as unit, 9.81 for m/s^2 as unit of the IMU's acceleration
+  lidar_meas_cov: 0.01
+  b_acc_cov: 0.0001
+  b_gyr_cov: 0.0001 
+  b_pc_cov: 0.01
+  imu_meas_acc_cov: 0.1 #0.1 # 2
+  imu_meas_omg_cov: 0.1 #0.1 # 2 
+  joint_meas_vel_cov: 2
+  joint_meas_pos_cov: 2
+  plane_thr: 0.1 # 0.05, the threshold for plane criteria, the smaller, the flatter a plane
+  match_s: 81
+  ivox_grid_resolution: 2.0
+  gravity: [0.0, 0.0, -9.810] # preknown gravity, use when imu_en is false or start from a non-stationary state
+  extrinsic_T: [0.047, 0.01825, 0.41794]
+  extrinsic_R: [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ]
+  extrinsic_Rfl: [ 1, 0, 0, 0, 1, 0, 0, 0, 1 ]
+
+robot:
+  sensor_height: 1.248
+  gait_cut: 5
+  height_thres_min: 0.05   # 0.04, 0.05, 0.06
+  height_thres_max: 0.15
+  vfov_lidar: 15
+  enable_HandleSet: true
+  enable_SingleDir: true
+  refswing_multi: 2.3
+  solediff2model: 0.0
+  max_clearance_ratio: 0.9 # walk_in_place 0.85, others: 0.9
+
+odometry: 
+  publish_odometry_without_downsample: false
+
+publish:
+  path_en: true                 # false: close the path output
+  scan_publish_en: true         # false: close all the point cloud output
+  scan_bodyframe_pub_en: false  # true: output the point cloud scans in IMU-body-frame
+
+pcd_save:    
+  pcd_save_en: false
+  interval: -1                 # how many LiDAR frames saved in each pcd file; 
+                               # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
