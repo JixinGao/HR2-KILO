@@ -83,6 +83,8 @@ rosbag play YOUR_DOWNLOADED.bag
 roslaunch hr2kilo mapping_velody16.launch
 rosbag play YOUR_DOWNLOADED.bag 
 ```
+- If you need to use the visualization script (enabled by default; can be disabled in **launch file**), please **change** the `topic` in **./scripts/RealTimePlot.py**.
+
 ## 5. Acknowledgments
 
 Thanks for [Point-LIO](https://github.com/hku-mars/Point-LIO) (Robust High-Bandwidth Lidar-Inertial Odometry).
